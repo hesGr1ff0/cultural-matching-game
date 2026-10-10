@@ -7,9 +7,60 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Culture Match</h1>
+    <header>
+        <h1>Culture Match</h1>
+        <p> Select two cards to match each cultural item with its culture of origin.</p>
+    </header>
+    
+    <main>
+        <section class="status" aria-label="Game Status">
+            <P>Matches: <span id="matches">0</span> / 8 </P>
+            <p>Attemps: <span id="attempts">0</span></p>
+            <p id="message" role="status">Select two cards.</p>
+        </section>
 
+        <section id="board" class="board" aria-label="Card">
+            <button class="card" type="button">
+                <span class="card-type">Item</span>
+                <span class="card-label">Placeholder one</span>
+            </button>
+            <button class="card" type="button">
+                <span class="card-type">Culture</span>
+                <span class="card-label">Placeholder two</span>
+            </button>
+            <button class="card" type="button">
+                <span class="card-type">Item</span>
+                <span class="card-label">Placeholder three</span>
+            </button>
+            <button class="card" type="button">
+                <span class="card-type">Culture</span>
+                <span class="card-label">Placeholder four</span>
+            </button>
+        </section>
+
+        <section class="fact-panel" aria-live="polite">
+            <h2>Did you know?</h2>
+            <p id="fact">Match a pair to reveal a fact about the item.</p>
+            <p id="completion" hidden></p>
+        </section>
+
+        <button id="play-again" type="button">Play Again</button>
+    </main>
+
+    <footer>
+        <h2>Sources</h2>
+        <ul>
+            <li>War Bonnet: <a href="https://www.britannica.com/topic/war-bonnet">Encyclopaedia Britannica</a></li>
+            <li>Maasai shuka: <a href="https://artsandculture.google.com/story/maasai-crafts-and-fashions-national-museums-of-kenya/ggURaG-t_WgykA">National Museums of Kenya</a> and <a href="https://www.britannica.com/topic/Maasai">Encyclopaedia Britannica</a></li>
+            <li>Kente cloth: <a href="https://collections.vam.ac.uk/item/O164606/kente-textile-unknown">Victoria and Albert Museum</a></li>
+            <li>Kandura: <a href="https://www.dubai.ae/clothing">Dubai government portal</a></li>
+            <li>Bindi: <a href="https://www.britannica.com/topic/bindi">Encyclopaedia Britannica</a> and <a href="https://www.hinduamerican.org/blog/the-purpose-of-the-bindi/">Hindu American Foundation</a></li>
+            <li>Sugar skull: <a href="https://ich.unesco.org/en/RL/indigenous-festivity-dedicated-to-the-dead-00054">UNESCO</a> and <a href="https://www.nationalgeographic.com/history/article/dia-de-los-muertos">National Geographic</a></li>
+            <li>Raqs sharqi: <a href="https://www.aramcoworld.com/Resources/Suggestions/Egyptian-Belly-Dance-in-Transition-The-Raqs-Sharqi">AramcoWorld</a></li>
+            <li>Jerk chicken: <a href="https://www.smithsonianmag.com/arts-culture/brief-history-jamaican-jerk-180976597/">Smithsonian Magazine</a></li>
+        </ul>
+        <p>Made for the Cultural Conversations Initiative.</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
- 
