@@ -117,6 +117,8 @@ function renderBoard(deck) {
 function handleCardClick(event) {
     const card = event.currentTarget;
 
+    if (locked) return;
+    if (card.classList.contains("matched")) return;
     if (card === firstCard) return;
 
     if (firstCard === null) {
@@ -126,13 +128,44 @@ function handleCardClick(event) {
         return;
     }
 
-    const isPair = firstCard.dataset.pair === card.dataset.pair;
-    console.log(firstCard.dataset.pair, "+", card.dataset.pair, "=", isPair ? "pair" : "not a pair");
-
-    firstCard.classList.remove("selected");
-    firstCard.removeAttribute("aria-pressed");
-    firstcard = null;
+    resolvePair(firstCard, card);
 }
+
+function resolvePair(first, second) {
+    firstCard = null;
+    first.classList.remove("selected");
+    first.removeAttribute("aria-pressed");
+    attempts = attempts + 1;
+
+    if (first.dataset.pair === second.dataset.pair) {
+        first.classList.add("matched");
+        second.classList.add("matched");
+        first.setAttribute("aria-disabled", true);
+        second.setAttribute("aria-disabled", "true");
+        matches = matches + 1;
+
+        const pair = pairs.find(function (entry) {
+            return entry.is === first.dataset.pair;
+        });
+        factOutput.textContent = pair.item + ": " + pair.fact;
+        message.textContent = "Correct.";
+        return;
+    }
+
+    locked = true;
+    first.classList.add("incorrect");
+    second.classList.add("incorrect");
+    message.textContent = "Not a pair. Try Again.";
+
+    pendingTimeout = setTimeout(function () {
+        first.classList.remove("incorrect");
+        second.classList.remove("incorrect");
+        locked = false;
+    }, DELAY);   
+}
+
+
+
 
 // ------------Start------------
 
@@ -140,4 +173,12 @@ renderBoard(buildDeck(pairs));
 
 // ------------State------------
 
+const DELAY = 900;
+
 let firstCard = null;
+let matches = 0;
+let attempts = 0;
+let locked = false;
+let pendingTimeout = null;
+
+
