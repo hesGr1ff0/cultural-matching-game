@@ -109,11 +109,35 @@ function renderBoard(deck) {
         label.textContent = card.label;
 
         button.append(type, label);
+        button.addEventListener("click", handleCardClick);
         board.append(button);
     });
+}
+
+function handleCardClick(event) {
+    const card = event.currentTarget;
+
+    if (card === firstCard) return;
+
+    if (firstCard === null) {
+        firstCard = card;
+        card.classList.add("selected");
+        card.setAttribute("aria-pressed", "true");
+        return;
+    }
+
+    const isPair = firstCard.dataset.pair === card.dataset.pair;
+    console.log(firstCard.dataset.pair, "+", card.dataset.pair, "=", isPair ? "pair" : "not a pair");
+
+    firstCard.classList.remove("selected");
+    firstCard.removeAttribute("aria-pressed");
+    firstcard = null;
 }
 
 // ------------Start------------
 
 renderBoard(buildDeck(pairs));
 
+// ------------State------------
+
+let firstCard = null;
