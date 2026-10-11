@@ -1,40 +1,40 @@
-# cultural-matching-game
+# Culture Match
 
-A browser matching game that pairs cultural items with their cultures of origin.
+A matching game that runs in web browser. The player matched eight cultural items to their cultures of origin; each correct match reveals one fact about the item.
 
-## Problem
+Play it here: https://hesGr1ff0.github.io/cultural-matching-game/
 
-_Why this problem matters in financial crime, in two or three sentences._
+## About
+This game is part 1 of a creative assignment on cultural appropriation. It is presented as the work of a student by a school to support "cultural conversations". The accompanying critique and response form parts two and three of the assignment.
 
-## Data
+## How to play
 
-- **Source:**
-- **Licence:**
-- **Size and class balance:**
-- **How to obtain:** run `python scripts/download_data.py`. Files are written to `data/`, which is excluded from version control.
+1. Sixteen cards are shown face up: eight items and eight cultures.
+2. Select two cards. A correct pair locks and shows a fact.
+3. An incorrect pair is marked briefly and then cleared. 
+4. Match all eight pairs, the choose "Play again" for a new order.
 
-## Method
+## Running it locally
 
-_The approach, with the key mathematical idea stated explicitly._
+Open 'index.html' in a browser. There is nothing special to install.
 
-## Results
+## Files
 
-_A small results table and one or two figures from `reports/figures/`._
+- 'index.html' : the structure of the page
+- 'style.css' : the appearance
+- 'script.js' : the card data and the game logic
 
-## Limitations
+## Sources
 
-_What the analysis cannot show, and how the result might fail in a real institution._
+- War bonnet: Encyclopaedia Britannica, "War bonnet". https://www.britannica.com/topic/war-bonnet
+- Maasai shuka: National Museums of Kenya, "Maasai Crafts and Fashions". https://artsandculture.google.com/story/maasai-crafts-and-fashions-national-museums-of-kenya/ggURaG-t_WgykA; Encyclopaedia Britannica, "Maasai". https://www.britannica.com/topic/Maasai
+- Kente cloth: Victoria and Albert Museum, collection record O164606. https://collections.vam.ac.uk/item/O164606/kente-textile-unknown
+- Kandura: Dubai government portal, "Clothing". https://www.dubai.ae/clothing
+- Bindi: Encyclopaedia Britannica, "Bindi". https://www.britannica.com/topic/bindi; Hindu American Foundation. https://www.hinduamerican.org/blog/the-purpose-of-the-bindi/
+- Sugar skull: UNESCO, "Indigenous festivity dedicated to the dead". https://ich.unesco.org/en/RL/indigenous-festivity-dedicated-to-the-dead-00054; National Geographic, "Here's what to know about Day of the Dead". https://www.nationalgeographic.com/history/article/dia-de-los-muertos
+- Raqs sharqi: Tom Verde, review of Heather D. Ward, "Egyptian Belly Dance in Transition", AramcoWorld. https://www.aramcoworld.com/Resources/Suggestions/Egyptian-Belly-Dance-in-Transition-The-Raqs-Sharqi
+- Jerk chicken: Smithsonian Magazine, "A Brief History of Jamaican Jerk". https://www.smithsonianmag.com/arts-culture/brief-history-jamaican-jerk-180976597/
 
-## Reproduction
+## Licence
 
-```bash
-git clone https://github.com/hesGr1ff0/cultural-matching-game.git
-cd cultural-matching-game
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-python scripts/download_data.py
-```
-
-Then run the notebooks in `notebooks/` in numerical order.
-
-## References
+MIT. See `LICENSE`.
