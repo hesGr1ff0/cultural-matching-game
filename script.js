@@ -1,4 +1,4 @@
-console.log("script.js is connected")
+
 
 //Culture Match: card data and game behaviour.
 
@@ -7,10 +7,10 @@ console.log("script.js is connected")
 const pairs = [
     {
         id: "war-bonnet",
-        item: "Feather war bonnet",
-        culture: "Plain nations (Lakota, Cheyenne, Crow)",
+        item: "Feathered war bonnet",
+        culture: "Plains nations (Lakota, Cheyenne, Crow)",
         category: "Dress",
-        fact: "Among Plains nations, a warrior historically earned each eagle feather through a brave deed, so a war bonnet signalled its wearers accopmlishments.",
+        fact: "Among Plains nations, a warrior historically earned each eagle feather through a brave deed, so a war bonnet signalled its wearer's accopmlishments.",
 
     },
     {
@@ -26,11 +26,11 @@ const pairs = [
         item: "Kandura",
         culture: "United Arab Emirates",
         category: "Dress",
-        fact: "The kandura, also known as the dishdasha, is an ankle-length, loose-fitting garments typically made of white cotton, worn by men in the United Arab Emirates with the ghutra headscarf.",
+        fact: "The kandura, also known as the dishdasha, is an ankle-length, loose-fitting garment typically made of white cotton, worn by men in the United Arab Emirates with the ghutra headscarf.",
     },
 
     {
-        id: "kandura",
+        id: "kente",
         item: "Kente cloth",
         culture: "Asante and Ewe peoples (Ghana)",
         category: "Textile",
@@ -48,7 +48,7 @@ const pairs = [
     {
         id: "sugar-skull",
         item: "Sugar skull (calavera)",
-        culture: "Mexico (Dia da Muertos)",
+        culture: "Mexico (Día da Muertos)",
         category: "Ceremonial",
         fact: "Sugar skulls are made for Dia de Muertos, when families welcome the return of deceased relatives with offerings; UNESCO inscribed the festivity as Intangible Cultural Heritage in 2008.",
     },
@@ -58,13 +58,13 @@ const pairs = [
         item: "Raqs sharqi (belly dance)",
         culture: "Egypt",
         category: "Performance",
-        fact: "Raqs sharqi, Arabic for \"eastern dance\", took its staged form in Egypt's entertainment halls in the late nineteenth and early twetieth centuries",
+        fact: "Raqs sharqi, Arabic for \"eastern dance\", took its staged form in Egypt's entertainment halls in the late nineteenth and early twentieth centuries",
     },
 
     {
         id: "jerk",
         item: "Jerk chicken",
-        culture: "Jamaican (Caribbean)",
+        culture: "Jamaica (Caribbean)",
         category: "Food",
         fact: "Jerk developed in Jamaica from the fusion of African and Taíno cultures, and a dish counts as authentic jerk only when the meat is smoked over pimento wood.",
     },
@@ -74,12 +74,22 @@ const pairs = [
 
 const board = document.querySelector("#board");
 const matchesOutput = document.querySelector("#matches");
-const attempsOutput = document.querySelector("#attempts");
+const attemptsOutput = document.querySelector("#attempts");
 const message = document.querySelector("#message");
 const factOutput = document.querySelector("#fact");
 const completion = document.querySelector("#completion");
 const playAgain = document.querySelector("#play-again");
 
+
+// ------------State------------
+
+const DELAY = 900;
+
+let firstCard = null;
+let matches = 0;
+let attempts = 0;
+let locked = false;
+let pendingTimeout = null;
 
 // ----------Functions-------------
 function buildDeck(pairList) {
@@ -91,6 +101,18 @@ function buildDeck(pairList) {
     return deck;
 }
 
+function shuffle(deck) {
+    const copy = deck.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
+    }
+    return copy;
+}
+
+
 function renderBoard(deck) {
     board.textContent = "";
     deck.forEach(function (card) {
@@ -100,7 +122,7 @@ function renderBoard(deck) {
         button.dataset.pair = card.pairId;
         button.dataset.type = card.type;
 
-        const type = document.createElement("button");
+        const type = document.createElement("span");
         type.className = "card-type";
         type.textContent = card.type === "item" ? "Item" : "Culture";
 
@@ -145,10 +167,12 @@ function resolvePair(first, second) {
         matches = matches + 1;
 
         const pair = pairs.find(function (entry) {
-            return entry.is === first.dataset.pair;
+            return entry.id === first.dataset.pair;
         });
         factOutput.textContent = pair.item + ": " + pair.fact;
         message.textContent = "Correct.";
+        updateStatus();
+        checkWin();
         return;
     }
 
@@ -156,6 +180,7 @@ function resolvePair(first, second) {
     first.classList.add("incorrect");
     second.classList.add("incorrect");
     message.textContent = "Not a pair. Try Again.";
+    updateStatus();
 
     pendingTimeout = setTimeout(function () {
         first.classList.remove("incorrect");
@@ -164,21 +189,41 @@ function resolvePair(first, second) {
     }, DELAY);   
 }
 
+function updateStatus() {
+    matchesOutput.textContent = matches;
+    attemptsOutput.textContent = attempts;
+}
+
+function checkWin() {
+    if (matches === pairs.length) {
+        completion.textContent = "You have matched all eight pairs in " + attempts + " attempts.";
+        completion.hidden = false;
+        message.textContent = "Game complete.";
+    }
+}
+
+function resetGame() {
+    clearTimeout(pendingTimeout);
+    firstCard = null;
+    matches = 0;
+    attempts = 0;
+    locked = false;
+
+    factOutput.textContent = "Match a pair to reveal a fact about the item.";
+    completion.hidden = true;
+    message.textContent = "Select two Cards.";
+    updateStatus();
+    renderBoard(shuffle(buildDeck(pairs)));
+}
+  
 
 
 
 // ------------Start------------
 
-renderBoard(buildDeck(pairs));
+playAgain.addEventListener("click", resetGame);
+resetGame();
 
-// ------------State------------
 
-const DELAY = 900;
-
-let firstCard = null;
-let matches = 0;
-let attempts = 0;
-let locked = false;
-let pendingTimeout = null;
 
 
